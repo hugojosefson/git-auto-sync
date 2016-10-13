@@ -52,21 +52,21 @@ run1 () {
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
 
-    echo '--- u1 adds rnd1'
+    echo '\n--- u1 adds rnd1'
     cd $D/r1; random_file rnd1
     peers - 'cd $D/r$j; git-auto-sync once'
     peers - 'cd $D/r$j; git-auto-sync once'
     cd $D/r2; git_log
     diff $D/r1/rnd1 $D/r2/rnd1
 
-    echo '--- u2 changes rnd1'
+    echo '\n--- u2 changes rnd1'
     cd $D/r2; random_file rnd1
     peers - 'cd $D/r$j; git-auto-sync once'
     peers - 'cd $D/r$j; git-auto-sync once'
     cd $D/r1; git_log
     diff $D/r1/rnd1 $D/r2/rnd1
 
-    echo '--- u1 and u2 changes rnd1'
+    echo '\n--- u1 and u2 changes rnd1'
     cd $D/r1; random_file rnd1; cp rnd1 ../rnd1.r1-master
     cd $D/r2; random_file rnd1; cp rnd1 ../rnd1.r2-master
     peers - 'cd $D/r$j; git-auto-sync once'
@@ -75,7 +75,7 @@ run1 () {
     diff $D/r2/rnd1.r1-master $D/rnd1.r1-master
     diff $D/r2/rnd1.r2-master $D/rnd1.r2-master
 
-    echo test passed.
+    echo '\ntest passed.\n\n'
 }
 
 init2 () {
@@ -111,13 +111,13 @@ run2 () {
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
 
-    echo '--- u1 adds rnd1'
+    echo '\n--- u1 adds rnd1'
     cd $D/r1; random_file rnd1
     for i in $(seq 2); do peers - 'cd $D/r$j; git-auto-sync once'; done
     cd $D/r$npeers; git_log
     diff $D/r1/rnd1 $D/r$npeers/rnd1
 
-    echo test passed.
+    echo '\ntest passed.\n\n'
 }
 
 run3 () {
@@ -126,7 +126,7 @@ run3 () {
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
 
-    echo '--- u1 adds huge rnd1'
+    echo '\n--- u1 adds huge rnd1'
     cd $D/r1; random_file rnd1 100000
     t () {
         for i in $(seq 2); do peers - 'cd $D/r$j; git-auto-sync once'; done
@@ -134,7 +134,7 @@ run3 () {
     cd $D/r$npeers; git_log
     diff $D/r1/rnd1 $D/r$npeers/rnd1
 
-    echo '--- u1 appends small data to end of rnd1'
+    echo '\n--- u1 appends small data to end of rnd1'
     cd $D/r1; date >> rnd1
     t () {
         for i in $(seq 2); do peers - 'cd $D/r$j; git-auto-sync once'; done
@@ -142,7 +142,7 @@ run3 () {
     cd $D/r$npeers; git_log
     diff $D/r1/rnd1 $D/r$npeers/rnd1
 
-    echo test passed.
+    echo '\ntest passed.\n\n'
 }
 
 test_runner() {
