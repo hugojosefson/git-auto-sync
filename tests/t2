@@ -1,6 +1,6 @@
 #!/bin/sh
 
-export D=$(pwd)
+export D=$(pwd)/test-temp
 export PATH=$(cd ..; pwd):$(pwd):$PATH
 
 . test-utils
@@ -10,17 +10,20 @@ set -e
 daemon_port=39418
 
 start_daemon () {
+    mkdir -p $D
     cd $D
     git daemon --verbose --export-all --base-path=$D --reuseaddr --pid-file=git-daemon.pid --listen=127.0.0.1 --port=$daemon_port --enable=receive-pack --detach
 }
 
 stop_daemon () {
+    mkdir -p $D
     cd $D
     xargs kill < git-daemon.pid || true
     rm git-daemon.pid || true
 }
 
 init1 () {
+    mkdir -p $D
     cd $D
     echo $1 > npeers
     npeers=$(cat npeers)
@@ -44,6 +47,7 @@ init1 () {
 }
 
 run1 () {
+    mkdir -p $D
     cd $D
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
@@ -75,6 +79,7 @@ run1 () {
 }
 
 init2 () {
+    mkdir -p $D
     cd $D
     echo $1 > npeers
     npeers=$(cat npeers)
@@ -101,6 +106,7 @@ init2 () {
 }
 
 run2 () {
+    mkdir -p $D
     cd $D
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
@@ -115,6 +121,7 @@ run2 () {
 }
 
 run3 () {
+    mkdir -p $D
     cd $D
     npeers=$(cat npeers)
     collabs=$(seq $npeers)
