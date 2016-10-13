@@ -55,7 +55,7 @@ If you don't have inotify-tools installed:
 
 #### Tests
 
-    $ cd tests; ./t2 test1 && ./t2 test2
+    $ cd tests; ./t2 all
 
 ### Todo
 

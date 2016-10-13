@@ -148,13 +148,19 @@ run3 () {
 test_runner() {
     local olddir=$(pwd)
     start_daemon
-    eval "$*" || true
+    eval "$*"
     stop_daemon
     cd $olddir
 }
 
-test1 () { test_runner '{ init1 2 && run1; }'; }
-test2 () { test_runner '{ init2 5 && run2; }'; }
-test3 () { test_runner '{ init1 2 && run3; }'; }
+cleanup() {
+    stop_daemon 2>/dev/null
+    [ -d "$D" ] && rm -rf "$D"
+}
+
+test1 () { test_runner '{ init1 2; run1; }'; }
+test2 () { test_runner '{ init2 5; run2; }'; }
+test3 () { test_runner '{ init1 2; run3; }'; }
+all () { cleanup; test1; test2; test3; }
 
 eval "$*"
