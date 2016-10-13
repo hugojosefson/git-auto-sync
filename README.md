@@ -61,10 +61,6 @@ If you don't have inotify-tools installed:
 
 - better handling of failures
 
-- when using inotify-tools for automatic detection of changes, support
-  full directory hierarchy synchronization instead of top directory
-  only
-
 ### Related
 
 - rsync, unison, dropbox, ...
