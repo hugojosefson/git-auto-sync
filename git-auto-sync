@@ -78,7 +78,7 @@ EOF
 
 _monitor_dir () {
     local x
-    inotifywait -q -m -e CLOSE_WRITE -e DELETE -e MOVED_TO . | while read x; do
+    inotifywait -q -m -e CLOSE_WRITE -e DELETE -e MOVED_FROM -e MOVED_TO . | while read x; do
         touch $D/local-change
         _unblock
     done
